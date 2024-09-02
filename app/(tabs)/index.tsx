@@ -9,8 +9,8 @@ export default function HomeScreen() {
   const [username, setUsername] = useState('');
   const [result, setResult] = useState('');
 
-  const endpoint = process.env.END_POINT;
-  const apiKey = process.env.API_KEY;
+  const endpoint = process.env.NEXT_PUBLIC_END_POINT;
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiVersion = "2023-03-15-preview";
   const deployment = "gpt-4o";
 
