@@ -11,7 +11,7 @@ export default function HomeScreen() {
 
   const endpoint = process.env.END_POINT;
   const apiKey = process.env.API_KEY;
-  const apiVersion = process.env.API_VERSION;
+  const apiVersion = "2023-03-15-preview";
   const deployment = "gpt-4o";
 
   //OPEN AI
