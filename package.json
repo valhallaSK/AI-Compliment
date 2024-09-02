@@ -10,8 +10,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "build":"expo build:web",
-    "postinstall": "expo-optimize"
+    "build":"expo build:web"
   },
   "jest": {
     "preset": "jest-expo"
