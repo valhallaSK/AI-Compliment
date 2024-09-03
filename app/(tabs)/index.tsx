@@ -14,8 +14,11 @@ export default function HomeScreen() {
   const apiVersion = "2023-03-15-preview";
   const deployment = "gpt-4o";
 
+  const [isLoading, setIsLoading] = useState(false)
+
   //OPEN AI
   const handleSubmit = async () => {
+    setIsLoading(true)
     try {
       const response = await fetch('/api/completions', {
         method: 'POST',
@@ -26,6 +29,7 @@ export default function HomeScreen() {
       });
 
       const data = await response.json();
+      setIsLoading(false)
       if (response.ok) {
         setResult(data.message);
       } else {
@@ -35,6 +39,7 @@ export default function HomeScreen() {
     } catch (error) {
       console.error('Request failed:', error);
       setResult('Request failed: ' + error);
+      setIsLoading(false)
     }
   };
 
@@ -78,7 +83,7 @@ export default function HomeScreen() {
             value={username}
             onChangeText={setUsername}
           />
-          <Button title="提交" onPress={handleSubmit} />
+          <Button title="提交" onPress={handleSubmit} disabled={isLoading}/>
         </View>
         <View style={styles.resultContainer}>
           <Text>{result}</Text>
