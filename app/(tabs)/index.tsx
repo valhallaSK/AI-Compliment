@@ -9,25 +9,32 @@ export default function HomeScreen() {
   const [username, setUsername] = useState('');
   const [result, setResult] = useState('');
 
-  const endpoint = process.env.NEXT_PUBLIC_END_POINT;
+  const endpoint = process.env.END_POINT;
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const apiVersion = "2023-03-15-preview";
   const deployment = "gpt-4o";
 
   //OPEN AI
   const handleSubmit = async () => {
-    const client = new AzureOpenAI({ endpoint, apiKey, apiVersion, deployment,dangerouslyAllowBrowser: true });
-    const result = await client.chat.completions.create({
-      messages: [
-        { role: "system", content: "你是一个极致的舔狗，根据对方提供的信息狠狠的赞美对方" },
-        { role: "user", content: username },
-      ],
-      model: "",
-    });
+    try {
+      const response = await fetch('/api/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
 
-    for (const choice of result.choices) {
-      console.log(choice.message);
-      setResult(choice.message.content ?? "")
+      const data = await response.json();
+      if (response.ok) {
+        setResult(data.message);
+      } else {
+        console.error('Error:', data.error);
+        setResult('Error occurred: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Request failed:', error);
+      setResult('Request failed: ' + error);
     }
   };
 
